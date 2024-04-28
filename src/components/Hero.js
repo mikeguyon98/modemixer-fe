@@ -16,7 +16,7 @@ const Hero = () => {
           error repellat voluptatibus ad.
         </p>
         <button className="bg-brand-dark text-white font-medium py-2 px-4 rounded transition-all hover:bg-brand-light active:scale-95">
-          Find a class
+          Find a collection
         </button>
       </div>
       <ShuffleGrid />

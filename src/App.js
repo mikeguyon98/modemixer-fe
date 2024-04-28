@@ -1,14 +1,18 @@
 import Header from "./components/Header";
-import CollectionCard from "./components/CollectionCard";
-import Hero from "./components/Hero";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import ExploreCollections from "./pages/ExploreCollections";
+import Collections from "./pages/Collections";
 
 function App() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center container mx-auto border h-screen pt-2">
-        <Hero />
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/collections" element={<ExploreCollections />} /> */}
+        <Route path="/collections" element={<Collections />} />
+      </Routes>
     </>
   );
 }
