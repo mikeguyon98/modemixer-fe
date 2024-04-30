@@ -9,11 +9,14 @@ export default function Header() {
           </Link>
         </nav>
         <nav>
-          <Link to="/collections" className="text-brand font-semibold ml-4">
+          <Link to="/collections" className="text-brand font-semibold ml-4 hover:text-brand-dark">
             Collections
           </Link>
-          <Link to="/" className="text-brand font-semibold ml-4">
+          <Link to="/" className="text-brand font-semibold ml-4 hover:text-brand-dark">
             about
+          </Link>
+          <Link to="/admin" className="text-brand font-semibold ml-4 hover:text-brand-dark">
+            Admin
           </Link>
         </nav>
       </header>
