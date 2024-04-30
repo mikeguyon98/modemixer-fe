@@ -29,7 +29,7 @@ function Card({ image, collectionId }) {
                 animate={{ y: 0 }}
                 exit={{ y: 10 }}
               >
-                <Link to="/collection">Shop the collection</Link>
+                <Link to={`${collectionId}?`}>Shop the collection</Link>
                 <ArrowCircleRightIcon />
               </motion.h1>
             </motion.div>
