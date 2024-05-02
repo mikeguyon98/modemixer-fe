@@ -7,7 +7,7 @@ function Card({ image, collectionId }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [onClick, setOnClick] = useState(false);
   return (
-    <Link to={`${collectionId}?`}>
+    <Link to={`/collections/${collectionId}`}>
       <motion.div
         className="relative overflow-hidden h-[300px] w-[300px] bg-slate-400 rounded-xl flex justify-center items-center"
         onHoverStart={() => setShowOverlay(true)}
