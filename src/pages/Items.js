@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ItemCard from "../components/ItemCard";
 import { get_items } from "../api";
 import { useParams } from "react-router-dom";
+import { AppStateContext } from "../App";
 
 // 662b31cf5fc4cf831890442d
 
 export default function Items() {
   const [items, setItems] = useState([]);
   const { id } = useParams();
+  const { setData } = useContext(AppStateContext);
 
   console.log(id);
 
@@ -18,9 +20,6 @@ export default function Items() {
           const res = await get_items();
           console.log(res.map((cur) => cur.collection));
           const filtered = res.filter((cur) => cur["collection"] === `${id}`);
-          // const filtered = res.filter(
-          //   (cur) => cur["collection"] === "662b31cf5fc4cf831890442d"
-          // );
           setItems(filtered);
         } catch (error) {
           throw new Error(`${error}`);
@@ -35,10 +34,18 @@ export default function Items() {
   console.log(items);
 
   return (
-    <div className="flex flex-row flex-wrap justify-center p-10 gap-10 mt-10">
-      {items?.map((item) => (
-        <ItemCard item={item} key={item.created_at} />
-      ))}
+    <div className="w-full flex justify-center items-center">
+      <div className="flex flex-col items-center">
+        <h1 className="font-extrabold text-3xl text-brand mt-10 uppercase">
+          {" "}
+          Collection Items
+        </h1>
+        <div className="grid grid-cols-1 w-fit md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 p-10">
+          {items?.map((item, index) => (
+            <ItemCard item={item} key={index} setData={setData} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

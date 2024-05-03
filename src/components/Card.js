@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function Card({ image, collectionId }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [onClick, setOnClick] = useState(false);
+
   return (
     <Link to={`/collections/${collectionId}`}>
       <motion.div
@@ -29,7 +30,7 @@ function Card({ image, collectionId }) {
                 animate={{ y: 0 }}
                 exit={{ y: 10 }}
               >
-                <Link to={`${collectionId}?`}>Shop the collection</Link>
+                <p>Shop the collection</p>
                 <ArrowCircleRightIcon />
               </motion.h1>
             </motion.div>

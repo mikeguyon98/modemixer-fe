@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
   IconButton,
+  Collapse,
 } from "@material-tailwind/react";
 
 export function StickyNavbar({ children }) {
@@ -20,7 +20,7 @@ export function StickyNavbar({ children }) {
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography as="li" variant="md" className="p-1 font-normal text-brand">
+      <Typography as="li" variant="h5" className="p-1 font-normal text-brand">
         <Link
           to="/collections"
           className="flex items-center hover:text-brand-dark"
@@ -28,7 +28,7 @@ export function StickyNavbar({ children }) {
           Collections
         </Link>
       </Typography>
-      <Typography as="li" variant="md" className="text-brand p-1 font-normal">
+      <Typography as="li" variant="h5" className="text-brand p-1 font-normal">
         <Link to="/" className="flex items-center hover:text-brand-dark">
           About
         </Link>
@@ -110,7 +110,7 @@ export function StickyNavbar({ children }) {
             </IconButton>
           </div>
         </div>
-        <MobileNav open={openNav}>
+        <Collapse open={openNav}>
           {navList}
           <div className="flex items-center gap-x-1">
             <Link to="/admin">
@@ -119,7 +119,7 @@ export function StickyNavbar({ children }) {
               </Button>
             </Link>
           </div>
-        </MobileNav>
+        </Collapse>
       </Navbar>
       <div className="mt-4">{children}</div>
     </div>

@@ -1,9 +1,6 @@
-import Header from "./components/Header";
-import HeaderMaterial from "./components/HeaderMaterial";
 import { StickyNavbar } from "./components/StickyNavbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import ExploreCollections from "./pages/ExploreCollections";
 import Collections from "./pages/Collections";
 import Admin from "./pages/Admin";
 import AdminSettings from "./pages/AdminSettings";
@@ -11,10 +8,15 @@ import AdminCollections from "./pages/AdminCollections";
 import GenerateCollection from "./pages/GenerateCollection";
 import Items from "./pages/Items";
 import ItemDetails from "./pages/ItemDetails";
+import { createContext, useState } from "react";
+
+export const AppStateContext = createContext();
 
 function App() {
+  const [data, setData] = useState([]);
+
   return (
-    <>
+    <AppStateContext.Provider value={{ data, setData }}>
       <StickyNavbar>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,7 +38,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </StickyNavbar>
-    </>
+    </AppStateContext.Provider>
   );
 }
 
