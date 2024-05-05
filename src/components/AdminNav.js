@@ -1,14 +1,70 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
-export default function AdminNav() {
-  return (
-    <div className="sticky left-0 z-40 w-54 bg-gray-200 borde h-[90vh]">
-        <nav className="mt-5 px-4">
-          <Link className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400 hover:text-white" to="/admin/settings">Settings</Link>
-          <Link className="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400 hover:text-white" to="/admin/collections">Collections</Link>
-          {/* Add more links as needed */}
-        </nav>
-      </div>
-  )
-}
+import {
+    Card,
+    Typography,
+    List,
+    ListItem,
+    ListItemPrefix,
+    ListItemSuffix,
+    Chip,
+  } from "@material-tailwind/react";
+  import {
+    PresentationChartBarIcon,
+    ShoppingBagIcon,
+    UserCircleIcon,
+    Cog6ToothIcon,
+    InboxIcon,
+    PowerIcon,
+  } from "@heroicons/react/24/solid";
+   
+  export default function AdminNav() {
+    return (
+      <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <div className="mb-2 p-4">
+          <Typography variant="h5" color="blue-gray">
+            Collection Creation Panel
+          </Typography>
+        </div>
+        <List>
+          <ListItem>
+            <ListItemPrefix>
+              <PresentationChartBarIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Create Collection
+          </ListItem>
+          <ListItem>
+            <ListItemPrefix>
+              <ShoppingBagIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            E-Commerce
+          </ListItem>
+          <ListItem>
+            <ListItemPrefix>
+              <InboxIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Inbox
+            <ListItemSuffix>
+              <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
+            </ListItemSuffix>
+          </ListItem>
+          <ListItem>
+            <ListItemPrefix>
+              <UserCircleIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Profile
+          </ListItem>
+          <ListItem>
+            <ListItemPrefix>
+              <Cog6ToothIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Settings
+          </ListItem>
+          <ListItem>
+            <ListItemPrefix>
+              <PowerIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Log Out
+          </ListItem>
+        </List>
+      </Card>
+    );
+  }

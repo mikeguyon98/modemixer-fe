@@ -8,7 +8,7 @@ function Collections() {
 
   useEffect(() => {
     get_collections().then((data) => {
-      setCollections(data);
+      setCollections(data.collections);
     });
   }, []);
 
