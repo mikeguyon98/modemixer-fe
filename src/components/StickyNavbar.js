@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CollectionCreator from "./CollectionCreator";
 import {
   Navbar,
   Typography,
@@ -61,15 +62,7 @@ export function StickyNavbar({ children }) {
           <div className="flex items-center gap-4 mr-12">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="flex items-center gap-x-1">
-              <Link to="/admin">
-                <Button
-                  variant="text"
-                  size="md"
-                  className="hidden hover:text-brand-dark bg-blue-700 text-white lg:inline-block"
-                >
-                  <span>Admin</span>
-                </Button>
-              </Link>
+              <CollectionCreator />
             </div>
             <IconButton
               variant="text"

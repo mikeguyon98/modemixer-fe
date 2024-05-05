@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -17,9 +18,9 @@ const Hero = () => {
           error repellat voluptatibus ad.
         </p>
         <Link to="/collections">
-          <button className="bg-brand-dark text-white font-medium py-2 px-4 rounded transition-all hover:bg-brand-light active:scale-95">
-            Find a collection
-          </button>
+          <Button size="lg" className="bg-brand text-white font-medium">
+            Create a Collection
+          </Button>
         </Link>
       </div>
       <ShuffleGrid />
