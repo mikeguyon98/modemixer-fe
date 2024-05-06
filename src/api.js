@@ -127,3 +127,24 @@ export const deleteItem = async (item_id) => {
     throw error;
   }
 };
+
+export const generate_item = async (
+  item_name,
+  item_description,
+  womanswear,
+  item_id
+) => {
+  try {
+    const response = await axios.put(`${base_url}/items/generate`, {
+      title: item_name,
+      description: item_description,
+      womanswear: womanswear,
+      item_id: item_id,
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error generating item:", error);
+    throw error;
+  }
+};

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import EditIcon from "./EditIcon";
+import { useParams } from "react-router-dom";
+import { generate_item } from "../api";
 
 export default function ItemDetailsPanel({
   title,
@@ -13,6 +15,7 @@ export default function ItemDetailsPanel({
   const [editMode, setEditMode] = useState(false);
   const [editableTitle, setEditableTitle] = useState(title);
   const [editableDescription, setEditableDescription] = useState(description);
+  const { item_id } = useParams;
 
   console.log(techpack_url);
   useEffect(() => {
@@ -28,9 +31,16 @@ export default function ItemDetailsPanel({
     setEditableDescription(event.target.value);
   };
 
-  const saveChanges = () => {
+  const saveChanges = async () => {
     onUpdate(editableTitle, editableDescription);
     setEditMode(false);
+    const generatedData = await generate_item(
+      editableTitle,
+      editableDescription,
+      gender,
+      item_id
+    );
+    console.log("Generated New Item:", generatedData);
   };
 
   const handleDownloadTechpack = () => {
@@ -103,7 +113,6 @@ export default function ItemDetailsPanel({
         <Button
           color="green"
           className="flex items-center gap-3 justify-center"
-          onClick={handleDownloadTechpack}
         >
           Generate Techpack
           <svg
