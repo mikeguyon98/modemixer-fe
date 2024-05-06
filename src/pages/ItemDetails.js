@@ -25,10 +25,11 @@ export default function ItemDetails() {
   useEffect(() => {
     async function fetchItemDetails() {
       const res = await get_items_by_id(item_id);
-      setItemData(res); // Set all item data at once
+      setItemData(res);
       setActiveIndex(0);
       setItemTitle(res.title);
       setItemDescription(res.description);
+      console.log();
     }
     fetchItemDetails();
   }, [item_id]);
