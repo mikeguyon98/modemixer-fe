@@ -18,6 +18,7 @@ export default function CollectionCard({ collection }) {
           Shop the collection.
         </Link>
       </div>
+      <p></p>
     </div>
   );
 }

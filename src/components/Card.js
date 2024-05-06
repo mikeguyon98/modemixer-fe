@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-function Card({ image, collectionId }) {
+function Card({ image, collectionId, title }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [onClick, setOnClick] = useState(false);
 
   return (
-    <Link to={`/collections/${collectionId}`}>
+    <Link to={`/collections/${title}/${collectionId}`}>
       <motion.div
         className="relative overflow-hidden h-[300px] w-[300px] bg-slate-400 rounded-xl flex justify-center items-center"
         onHoverStart={() => setShowOverlay(true)}
@@ -30,7 +30,7 @@ function Card({ image, collectionId }) {
                 animate={{ y: 0 }}
                 exit={{ y: 10 }}
               >
-                <p>Shop the collection</p>
+                <p>View the collection</p>
                 <ArrowCircleRightIcon />
               </motion.h1>
             </motion.div>
@@ -38,6 +38,16 @@ function Card({ image, collectionId }) {
         </AnimatePresence>
         <img src={image} alt={image} className="w-full h-full object-cover" />
       </motion.div>
+      <div className="flex justify-center overflow-hidden mt-5">
+        <p
+          className="hover:text-blue-300 max-w-[80%] font-bold text-brand-dark hover:cursor-pointer"
+          style={{
+            fontSize: "1.05rem",
+          }}
+        >
+          {title.length > 26 ? `${title.substring(0, 22)}...` : title}
+        </p>
+      </div>
     </Link>
   );
 }

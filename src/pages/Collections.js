@@ -12,6 +12,8 @@ function Collections() {
     });
   }, []);
 
+  console.log(collections);
+
   return (
     <div className="w-full flex justify-center items-center">
       {" "}
@@ -26,11 +28,12 @@ function Collections() {
           {/* <h1>
             {JSON.stringify(collections)}
           </h1> */}
-          {collections.map((collection, index) => (
+          {collections?.map((collection, index) => (
             <Card
               key={index}
               image={collection["image_url"]}
               collectionId={collection.id}
+              title={collection.name}
             />
           ))}
         </div>

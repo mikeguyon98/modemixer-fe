@@ -14,6 +14,7 @@ export const AppStateContext = createContext();
 
 function App() {
   const [data, setData] = useState([]);
+  const [title, setTitle] = useState("");
 
   return (
     <AppStateContext.Provider value={{ data, setData }}>
@@ -21,13 +22,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/collections" element={<ExploreCollections />} /> */}
-          <Route path="collections" element={<Collections />} />
 
           <Route path="/collections" element={<Collections />} />
 
-          <Route path="/collections/:id" element={<Items />} />
+          <Route path="/collections/:title/:id" element={<Items />} />
           {/* <Route path="/collections/items/id:" element={<ItemCard />} /> */}
-          <Route path="/collections/:id/items" element={<ItemDetails />} />
+          <Route
+            path="/collections/:title/:id/items"
+            element={<ItemDetails />}
+          />
 
           <Route path="/admin/settings" element={<AdminSettings />} />
           <Route path="/admin/collections" element={<AdminCollections />} />
