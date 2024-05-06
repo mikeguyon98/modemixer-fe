@@ -61,7 +61,7 @@ export default function Admin() {
                 clearInterval(interval);
             }
         };
-        interval = setInterval(fetchStatus, 2000); // Check every 2 seconds
+        interval = setInterval(fetchStatus, 6000); // Check every 2 seconds
         await fetchStatus(); // Initial fetch to avoid delay
     };
 
