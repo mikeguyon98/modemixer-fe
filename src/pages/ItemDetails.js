@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { get_items_by_id } from "../api";
 import ItemDetailsPanel from "../components/ItemDetailsPanel";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { Spinner } from '@material-tailwind/react'
+import SpinnerComp from "../components/SpinnerComp";
+
 export default function ItemDetails() {
   const { item_id } = useParams();
   const [itemData, setItemData] = useState({
@@ -31,6 +32,7 @@ export default function ItemDetails() {
     setItemTitle(newData.title);
     setItemDescription(newData.description);
     setGender(newData.gender);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function ItemDetails() {
       <div className="flex justify-start">
         {loading ? (
           <div className="flex justify-center items-center h-[600px] w-[500px]">
-            <Spinner />
+            <SpinnerComp />
           </div>
         ) : (
           <div className="flex flex-col items-center p-12 relative">
@@ -121,6 +123,8 @@ export default function ItemDetails() {
             setGender={setGender}
             techpack_url={itemData.techpack_url}
             item_id={item_id}
+            setLoading={setLoading}
+            img_urls={itemData.image_urls}
           />
         </div>
       </div>

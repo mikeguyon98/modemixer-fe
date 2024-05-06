@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import EditIcon from "./EditIcon";
-import { Spinner } from "@material-tailwind/react";
-import { generate_item } from "../api";
+import SpinnerComp from "./SpinnerComp";
+import { generate_item, generate_techpack } from "../api";
 
 export default function ItemDetailsPanel({
   title,
@@ -14,16 +14,22 @@ export default function ItemDetailsPanel({
   gender,
   setGender,
   item_id,
+  setLoading,
+  img_urls,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [editableTitle, setEditableTitle] = useState(title);
   const [editableDescription, setEditableDescription] = useState(description);
-  const [loading, setLoading] = useState(false);
+  const [localTechpackUrl, setLocalTechpackUrl] = useState(techpack_url);
+  const [loading, setLocalLoading] = useState(false);
+  const [shouldShowDownloadButton, setShouldShowDownloadButton] = useState(localTechpackUrl && localTechpackUrl.trim() !== "");
+
 
   useEffect(() => {
     setEditableTitle(title);
     setEditableDescription(description);
-  }, [title, description]);
+    setLocalTechpackUrl(techpack_url);
+  }, [title, description, techpack_url]);
 
   const handleTitleChange = (event) => {
     setEditableTitle(event.target.value);
@@ -36,6 +42,7 @@ export default function ItemDetailsPanel({
   const saveChanges = async () => {
     onUpdate(editableTitle, editableDescription, gender);
     setEditMode(false);
+    setLocalLoading(true);
     setLoading(true);
     const generatedData = await generate_item(
       editableTitle,
@@ -45,12 +52,31 @@ export default function ItemDetailsPanel({
     );
     console.log("Generated New Item:", generatedData);
     onItemDataUpdate(generatedData);
-    setLoading(false);
+    setLocalLoading(false);
   };
 
   const handleDownloadTechpack = () => {
-    window.open(techpack_url, "_blank");
+    window.open(localTechpackUrl, "_blank");
   };
+
+  const handleGenerateTechpack = async () => {
+    setLocalLoading(true);
+    const newTechpackData = await generate_techpack(
+      editableTitle,
+      editableDescription,
+      gender,
+      item_id,
+      img_urls
+    );
+    if (newTechpackData && newTechpackData.techpack_url) {
+      setLocalTechpackUrl(newTechpackData.techpack_url);
+      onItemDataUpdate(newTechpackData);
+    }
+    console.log("Generated Techpack:", newTechpackData.techpack_url);
+    setLocalLoading(false);
+    setShouldShowDownloadButton(true);
+  };
+
 
   return (
     <div className="space-y-6 mt-20">
@@ -71,16 +97,6 @@ export default function ItemDetailsPanel({
           />
           <div className="flex justify-center space-x-4 mb-4">
             <button
-              onClick={() => setGender(false)}
-              className={`px-4 py-2 text-lg rounded-full font-semibold ${
-                !gender
-                  ? "bg-black text-white"
-                  : "text-black border border-white"
-              }`}
-            >
-              Womenswear
-            </button>
-            <button
               onClick={() => setGender(true)}
               className={`px-4 py-2 text-lg rounded-full font-semibold ${
                 gender
@@ -88,15 +104,22 @@ export default function ItemDetailsPanel({
                   : "text-black border border-white"
               }`}
             >
+              Womenswear
+            </button>
+            <button
+              onClick={() => setGender(false)}
+              className={`px-4 py-2 text-lg rounded-full font-semibold ${
+                !gender
+                  ? "bg-black text-white"
+                  : "text-black border border-white"
+              }`}
+            >
               Menswear
             </button>
           </div>
-          <button
-            onClick={saveChanges}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            {loading ? <Spinner /> : "Save"}
-          </button>
+          <Button onClick={saveChanges} color="green" className="px-4 py-2">
+            {loading ? <SpinnerComp /> : "Save"}
+          </Button>
         </>
       ) : (
         <>
@@ -117,44 +140,49 @@ export default function ItemDetailsPanel({
       <div className="flex flex-col gap-5 my-5">
         <Button
           color="green"
+          onClick={handleGenerateTechpack}
           className="flex items-center gap-3 justify-center"
         >
-          Generate Techpack
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.455L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
-            />
-          </svg>
+          {loading ? <SpinnerComp /> : "Generate Techpack"}
+          {!loading && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.455L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+              />
+            </svg>
+          )}
         </Button>
-        <Button
-          className="flex items-center gap-3 justify-center"
-          onClick={handleDownloadTechpack}
-        >
-          Download Techpack
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
+        {shouldShowDownloadButton && (
+          <Button
+            className="flex items-center gap-3 justify-center"
+            onClick={handleDownloadTechpack}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-            />
-          </svg>
-        </Button>
+            Download Techpack
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+              />
+            </svg>
+          </Button>
+        )}
       </div>
     </div>
   );
