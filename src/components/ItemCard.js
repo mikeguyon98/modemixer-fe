@@ -27,8 +27,7 @@ function ItemCard({ item, setData }) {
       onMouseLeave={() => setHover(false)}
     >
       <Link
-        to={`/collections/${title}/${item.collection}/items`}
-        onClick={() => setData([item])}
+        to={`/items/${item.id}`}
       >
         <motion.div
           className="relative overflow-hidden h-[300px] w-[300px] bg-slate-400 rounded-xl flex justify-center items-center"

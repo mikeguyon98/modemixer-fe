@@ -1,21 +1,48 @@
-import React from "react";
-import { useContext, useState } from "react";
-import { AppStateContext } from "../App";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import ItemDetailsPanel from "../components/ItemDetailsPanel";
+import { get_item_by_id } from "../api";
 
 export default function ItemDetails() {
-  const { data } = useContext(AppStateContext);
-  const { title, description, image_urls, womanswear } = data[0];
-  const [active, setActive] = useState(image_urls[0]);
-
-  const [itemTitle, setItemTitle] = useState(title);
-  const [itemDescription, setItemDescription] = useState(description);
+  const { item_id } = useParams();
+  const navigate = useNavigate();
+  const [data, setData] = useState(null);
+  const [active, setActive] = useState("");
+  const [itemTitle, setItemTitle] = useState("");
+  const [itemDescription, setItemDescription] = useState("");
   const [gender, setGender] = useState(false);
+
+  useEffect(() => {
+    const fetchItemDetails = async () => {
+      try {
+        const itemData = await get_item_by_id(item_id);
+        setData(itemData);
+        setActive(itemData.image_urls[0]);
+        setItemTitle(itemData.title);
+        setItemDescription(itemData.description);
+      } catch (error) {
+        console.error("Failed to fetch item details:", error);
+        navigate("/collections");
+      }
+    };
+
+    fetchItemDetails();
+  }, [item_id, navigate]);
 
   const updateText = (newTitle, newDescription) => {
     setItemTitle(newTitle);
     setItemDescription(newDescription);
   };
+
+  if (!data) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <p className="text-xl font-semibold">Loading item details...</p>
+      </div>
+    );
+  }
+
+  const { image_urls } = data;
 
   return (
     <div className="flex flex-col ml-24 mx-auto">

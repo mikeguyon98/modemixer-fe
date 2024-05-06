@@ -72,3 +72,18 @@ export const get_items = async (collection_id) => {
     throw error;
   }
 };
+
+export const get_item_by_id = async (item_id) => {
+  try {
+    const response = await axios.get(`${base_url}/items`, {
+      params: {
+        item_id: item_id
+      }
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching item:", error);
+    throw error;
+  }
+}

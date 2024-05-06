@@ -28,7 +28,7 @@ function App() {
           <Route path="/collections/:title/:id" element={<Items />} />
           {/* <Route path="/collections/items/id:" element={<ItemCard />} /> */}
           <Route
-            path="/collections/:title/:id/items"
+            path="/items/:item_id"
             element={<ItemDetails />}
           />
 
