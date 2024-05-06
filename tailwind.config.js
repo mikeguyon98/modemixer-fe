@@ -8,9 +8,9 @@ module.exports = withMT({
     extend: {
       colors: {
         brand: {
-          light: "#E0F2FE",
-          DEFAULT: "#0284C7",
-          dark: "#0369A1",
+          light: "#616161",
+          DEFAULT: "#212121",
+          dark: "#212121",
         },
         accent: {
           light: "#FDE68A",
