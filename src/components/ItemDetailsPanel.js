@@ -1,7 +1,8 @@
+// src/components/ItemDetailsPanel.js
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import EditIcon from "./EditIcon";
-import { Spinner } from "@material-tailwind/react"
+import { Spinner } from "@material-tailwind/react";
 import { generate_item } from "../api";
 
 export default function ItemDetailsPanel({

@@ -1,10 +1,10 @@
+// src/pages/ItemDetails.js
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { get_items_by_id } from "../api";
 import ItemDetailsPanel from "../components/ItemDetailsPanel";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { Spinner } from "@material-tailwind/react"
-
+import { Spinner } from '@material-tailwind/react'
 export default function ItemDetails() {
   const { item_id } = useParams();
   const [itemData, setItemData] = useState({
@@ -41,6 +41,7 @@ export default function ItemDetails() {
       setActiveIndex(0);
       setItemTitle(res.title);
       setItemDescription(res.description);
+      setGender(res.gender);
       setLoading(false);
     }
     fetchItemDetails();
