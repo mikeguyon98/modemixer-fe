@@ -13,6 +13,31 @@ export const get_collections = async () => {
   }
 };
 
+export const generate_collection = async (collection_name, collection_description) => {
+  try {
+    const response = await axios.post(`${base_url}/collections/generate_collection`, {
+      name: collection_name,
+      description: collection_description
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error generating collection:", error);
+    throw error;
+  }
+};
+
+export const check_endpoint_status = async (collection_id) => {
+  try {
+    const response = await axios.get(`${base_url}/collections/${collection_id}/status`);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error checking collection status:", error);
+    throw error;
+  }
+};
+
 export const generate_collection_description = async (collection_title) => {
   console.log(collection_title)
   try {
