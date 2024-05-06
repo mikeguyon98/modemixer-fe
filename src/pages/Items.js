@@ -9,7 +9,6 @@ import { AppStateContext } from "../App";
 export default function Items() {
   const [items, setItems] = useState([]);
   const { id } = useParams();
-  const { setData } = useContext(AppStateContext);
   const { title } = useParams();
 
   console.log(id);
@@ -40,7 +39,7 @@ export default function Items() {
         </h1>
         <div className="grid grid-cols-1 w-fit md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 p-10">
           {items?.map((item, index) => (
-            <ItemCard item={item} key={index} setData={setData} />
+            <ItemCard item={item} key={index} />
           ))}
         </div>
       </div>
