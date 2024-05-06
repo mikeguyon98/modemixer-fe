@@ -7,8 +7,8 @@ export const get_collections = async (limit, offset) => {
     const response = await axios.get(`${base_url}/collections`, {
       params: {
         limit,
-        offset
-      }
+        offset,
+      },
     });
     console.log(response);
     return response.data;
@@ -18,12 +18,18 @@ export const get_collections = async (limit, offset) => {
   }
 };
 
-export const generate_collection = async (collection_name, collection_description) => {
+export const generate_collection = async (
+  collection_name,
+  collection_description
+) => {
   try {
-    const response = await axios.post(`${base_url}/collections/generate_collection`, {
-      name: collection_name,
-      description: collection_description
-    });
+    const response = await axios.post(
+      `${base_url}/collections/generate_collection`,
+      {
+        name: collection_name,
+        description: collection_description,
+      }
+    );
     console.log(response);
     return response.data;
   } catch (error) {
@@ -34,7 +40,9 @@ export const generate_collection = async (collection_name, collection_descriptio
 
 export const check_endpoint_status = async (collection_id) => {
   try {
-    const response = await axios.get(`${base_url}/collections/${collection_id}/status`);
+    const response = await axios.get(
+      `${base_url}/collections/${collection_id}/status`
+    );
     console.log(response);
     return response.data;
   } catch (error) {
@@ -44,11 +52,14 @@ export const check_endpoint_status = async (collection_id) => {
 };
 
 export const generate_collection_description = async (collection_title) => {
-  console.log(collection_title)
+  console.log(collection_title);
   try {
-    const response = await axios.post(`${base_url}/collections/generate_collection_description`, {
-      name: collection_title
-    });
+    const response = await axios.post(
+      `${base_url}/collections/generate_collection_description`,
+      {
+        name: collection_title,
+      }
+    );
     console.log(response);
     return response.data;
   } catch (error) {
@@ -59,16 +70,60 @@ export const generate_collection_description = async (collection_title) => {
 
 export const get_items = async (collection_id) => {
   try {
-    const response = await axios.get(`${base_url}/items`,
-      {
-        params: {
-          collection_id: collection_id
-        }
-      });
+    const response = await axios.get(`${base_url}/items`, {
+      params: {
+        collection_id: collection_id,
+      },
+    });
     console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching collections:", error);
+    throw error;
+  }
+};
+
+export const get_items_by_id = async (item_id) => {
+  try {
+    const response = await axios.get(`${base_url}/items`, {
+      params: {
+        item_id: item_id,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching collections:", error);
+    throw error;
+  }
+};
+
+export const deleteCollection = async (collection_id) => {
+  try {
+    const response = await axios.delete(`${base_url}/collections`, {
+      params: {
+        collection_id: collection_id,
+      },
+    });
+    console.log("Collection deleted:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting collection:", error);
+    throw error;
+  }
+};
+
+export const deleteItem = async (item_id) => {
+  try {
+    const response = await axios.delete(`${base_url}/items`, {
+      params: {
+        item_id: item_id,
+      },
+    });
+    console.log("Item deleted:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting item:", error);
     throw error;
   }
 };

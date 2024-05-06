@@ -10,38 +10,31 @@ import Items from "./pages/Items";
 import ItemDetails from "./pages/ItemDetails";
 import { createContext, useState } from "react";
 
-export const AppStateContext = createContext();
-
 function App() {
-  const [data, setData] = useState([]);
-  const [title, setTitle] = useState("");
-
   return (
-    <AppStateContext.Provider value={{ data, setData }}>
-      <StickyNavbar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/collections" element={<ExploreCollections />} /> */}
+    <StickyNavbar>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/collections" element={<ExploreCollections />} /> */}
 
-          <Route path="/collections" element={<Collections />} />
+        <Route path="/collections" element={<Collections />} />
 
-          <Route path="/collections/:title/:id" element={<Items />} />
-          {/* <Route path="/collections/items/id:" element={<ItemCard />} /> */}
-          <Route
-            path="/collections/:title/:id/items"
-            element={<ItemDetails />}
-          />
+        <Route path="/collections/:title/:id" element={<Items />} />
+        {/* <Route path="/collections/items/id:" element={<ItemCard />} /> */}
+        <Route
+          path="/collections/:title/:id/:item_id"
+          element={<ItemDetails />}
+        />
 
-          <Route path="/admin/settings" element={<AdminSettings />} />
-          <Route path="/admin/collections" element={<AdminCollections />} />
-          <Route
-            path="admin/generate_collection"
-            element={<GenerateCollection />}
-          />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
-      </StickyNavbar>
-    </AppStateContext.Provider>
+        <Route path="/admin/settings" element={<AdminSettings />} />
+        <Route path="/admin/collections" element={<AdminCollections />} />
+        <Route
+          path="admin/generate_collection"
+          element={<GenerateCollection />}
+        />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </StickyNavbar>
   );
 }
 
