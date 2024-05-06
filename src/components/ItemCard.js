@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -8,6 +8,7 @@ function ItemCard({ item, setData }) {
   const [hover, setHover] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
   const [onClick, setOnClick] = useState(false);
+  const { title } = useParams();
 
   const nextImage = () => {
     setActive((prev) => (prev + 1) % item.image_urls.length);
@@ -21,12 +22,12 @@ function ItemCard({ item, setData }) {
 
   return (
     <div
-      className="relative h-[300px] w-[300px]"
+      className="relative mt-8 max-h-[345px]"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <Link
-        to={`/collections/${item.collection}/items`}
+        to={`/collections/${title}/${item.collection}/items`}
         onClick={() => setData([item])}
       >
         <motion.div
@@ -70,7 +71,7 @@ function ItemCard({ item, setData }) {
             position: "absolute",
             left: "50%",
             transform: "translateX(-50%)",
-            bottom: 0,
+            top: "75%",
             width: "35%",
             height: "8%",
             background: "rgba(255, 255, 255, 0.9)",
@@ -125,6 +126,24 @@ function ItemCard({ item, setData }) {
           </button>
         </div>
       )}
+
+      <Link
+        to={`/collections/${item.collection}/items`}
+        onClick={() => setData([item])}
+      >
+        <div className="flex mt-5 justify-center">
+          <span
+            className="hover:text-blue-300 w-[80%] font-bold text-brand-dark hover:cursor-pointer"
+            style={{
+              fontSize: "1.05rem",
+            }}
+          >
+            {item.title.length > 26
+              ? `${item.title.substring(0, 22)}...`
+              : item.title}{" "}
+          </span>
+        </div>
+      </Link>
     </div>
   );
 }
