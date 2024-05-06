@@ -18,10 +18,8 @@ export default function Items() {
     function () {
       async function fetchItems() {
         try {
-          const res = await get_items();
-          console.log(res.map((cur) => cur.collection));
-          const filtered = res.filter((cur) => cur["collection"] === `${id}`);
-          setItems(filtered);
+          const res = await get_items(id);
+          setItems(res);
         } catch (error) {
           throw new Error(`${error}`);
         }

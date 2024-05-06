@@ -57,9 +57,14 @@ export const generate_collection_description = async (collection_title) => {
   }
 };
 
-export const get_items = async () => {
+export const get_items = async (collection_id) => {
   try {
-    const response = await axios.get(`${base_url}/items`);
+    const response = await axios.get(`${base_url}/items`,
+      {
+        params: {
+          collection_id: collection_id
+        }
+      });
     console.log(response);
     return response.data;
   } catch (error) {
