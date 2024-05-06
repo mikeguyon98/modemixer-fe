@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
 import EditIcon from "./EditIcon";
-import { useParams } from "react-router-dom";
+import { Spinner } from "@material-tailwind/react"
 import { generate_item } from "../api";
 
 export default function ItemDetailsPanel({
   title,
   description,
   onUpdate,
+  onItemDataUpdate,
   techpack_url,
   gender,
   setGender,
+  item_id,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [editableTitle, setEditableTitle] = useState(title);
   const [editableDescription, setEditableDescription] = useState(description);
-  const { item_id } = useParams;
+  const [loading, setLoading] = useState(false);
 
-  console.log(techpack_url);
   useEffect(() => {
     setEditableTitle(title);
     setEditableDescription(description);
@@ -32,8 +33,9 @@ export default function ItemDetailsPanel({
   };
 
   const saveChanges = async () => {
-    onUpdate(editableTitle, editableDescription);
+    onUpdate(editableTitle, editableDescription, gender);
     setEditMode(false);
+    setLoading(true);
     const generatedData = await generate_item(
       editableTitle,
       editableDescription,
@@ -41,6 +43,8 @@ export default function ItemDetailsPanel({
       item_id
     );
     console.log("Generated New Item:", generatedData);
+    onItemDataUpdate(generatedData);
+    setLoading(false);
   };
 
   const handleDownloadTechpack = () => {
@@ -90,7 +94,7 @@ export default function ItemDetailsPanel({
             onClick={saveChanges}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            Save
+            {loading ? <Spinner /> : "Save"}
           </button>
         </>
       ) : (
@@ -126,7 +130,7 @@ export default function ItemDetailsPanel({
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.455L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
             />
           </svg>
         </Button>

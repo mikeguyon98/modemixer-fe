@@ -135,11 +135,15 @@ export const generate_item = async (
   item_id
 ) => {
   try {
-    const response = await axios.put(`${base_url}/items/generate`, {
+    console.log(item_id)
+    console.log(item_name)
+    console.log(item_description)
+    console.log(womanswear)
+    const response = await axios.put(`${base_url}/items/generate/`, {
       title: item_name,
       description: item_description,
       womanswear: womanswear,
-      item_id: item_id,
+      id: item_id,
     });
     console.log(response);
     return response.data;
