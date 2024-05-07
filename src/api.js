@@ -2,13 +2,20 @@ import axios from "axios";
 
 // const base_url = "http://127.0.0.1:8000";
 const base_url = "https://modemixerapi.azurewebsites.net"
+const header = {'Access-Control-Allow-Origin' : '*',}
 
 export const get_collections = async (limit, offset) => {
   try {
+    console.log("Fetching collections")
+    console.log("Headers:", header)
     const response = await axios.get(`${base_url}/collections`, {
       params: {
         limit,
         offset,
+      },
+      headers: {
+        ...header,
+        'Content-Type': 'application/json',
       },
     });
     console.log(response);
@@ -29,6 +36,12 @@ export const generate_collection = async (
       {
         name: collection_name,
         description: collection_description,
+      },
+      {
+        headers: {
+          ...header,
+          'Content-Type': 'application/json',
+        },
       }
     );
     console.log(response);
@@ -42,7 +55,13 @@ export const generate_collection = async (
 export const check_endpoint_status = async (collection_id) => {
   try {
     const response = await axios.get(
-      `${base_url}/collections/${collection_id}/status`
+      `${base_url}/collections/${collection_id}/status`,
+      {
+        headers: {
+          ...header,
+          'Content-Type': 'application/json',
+        },
+      }
     );
     console.log(response);
     return response.data;
@@ -59,6 +78,12 @@ export const generate_collection_description = async (collection_title) => {
       `${base_url}/collections/generate_collection_description`,
       {
         name: collection_title,
+      },
+      {
+        headers: {
+          ...header,
+          'Content-Type': 'application/json',
+        },
       }
     );
     console.log(response);
@@ -75,6 +100,10 @@ export const get_items = async (collection_id) => {
       params: {
         collection_id: collection_id,
       },
+      headers: {
+        ...header,
+        'Content-Type': 'application/json',
+      }
     });
     console.log(response);
     return response.data;
@@ -90,6 +119,10 @@ export const get_items_by_id = async (item_id) => {
       params: {
         item_id: item_id,
       },
+      headers: {
+        ...header,
+        'Content-Type': 'application/json',
+      }
     });
     console.log(response.data);
     return response.data;
@@ -105,6 +138,10 @@ export const deleteCollection = async (collection_id) => {
       params: {
         collection_id: collection_id,
       },
+      headers: {
+        ...header,
+        'Content-Type': 'application/json',
+      }
     });
     console.log("Collection deleted:", response.data);
     return response.data;
@@ -120,6 +157,10 @@ export const deleteItem = async (item_id) => {
       params: {
         item_id: item_id,
       },
+      headers: {
+        ...header,
+        'Content-Type': 'application/json',
+      }
     });
     console.log("Item deleted:", response.data);
     return response.data;
@@ -145,6 +186,12 @@ export const generate_item = async (
       description: item_description,
       womanswear: womanswear,
       id: item_id,
+    },
+    {
+      headers: {
+        ...header,
+        'Content-Type': 'application/json',
+      }
     });
     console.log(response);
     return response.data;
@@ -172,6 +219,12 @@ export const generate_techpack = async (
         womanswear: womanswear,
         id: item_id,
         image_urls: image_urls,
+      },
+      {
+        headers: {
+          ...header,
+          'Content-Type': 'application/json',
+        }
       });
       console.log("RESPONSE");
       console.log(response);
