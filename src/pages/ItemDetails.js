@@ -60,7 +60,6 @@ export default function ItemDetails() {
       prevIndex === itemData.image_urls.length - 1 ? 0 : prevIndex + 1
     );
   };
-
   return (
     <div className="flex flex-col ml-24 mx-auto">
       <div className="flex justify-start">
@@ -69,47 +68,44 @@ export default function ItemDetails() {
             <SpinnerComp />
           </div>
         ) : (
-          <div className="flex flex-col items-center p-12 relative">
+          <div className="relative flex flex-col items-center p-14">
             <img
               className="h-[600px] w-[500px] object-contain object-center"
               src={itemData.image_urls[activeIndex]}
               alt=""
             />
-            <button
-              onClick={prevImage}
-              className="absolute bottom-16 left-8 bg-black text-white p-2"
-              title="Previous Image"
-            >
-              <ChevronLeftIcon className="h-20 w-7" />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute bottom-16 right-8 bg-black text-white p-2"
-              title="Next Image"
-            >
-              <ChevronRightIcon className="h-20 w-7" />
-            </button>
-            <div
-              className="grid grid-cols-3 gap-2 mt-4"
-              style={{
-                maxWidth: "480px",
-              }}
-            >
-              {itemData.image_urls?.map((imgelink, index) => (
-                <div
-                  key={index}
-                  className={`cursor-pointer ${
-                    index === activeIndex ? "ring-4 ring-blue-500" : ""
-                  }`}
-                >
-                  <img
+            <div className="relative mt-4" style={{ maxWidth: "490px" }}>
+              <button
+                onClick={prevImage}
+                className="absolute left-[-50px] top-[50%] transform -translate-y-1/2 bg-black text-white p-2 z-10"
+                title="Previous Image"
+              >
+                <ChevronLeftIcon className="h-20 w-5" />
+              </button>
+              <div className="grid grid-cols-3 gap-2">
+                {itemData.image_urls?.map((imgelink, index) => (
+                  <div
+                    key={index}
+                    className={`cursor-pointer ${
+                      index === activeIndex ? "ring-4 ring-blue-500" : ""
+                    }`}
                     onClick={() => setActiveIndex(index)}
-                    src={imgelink}
-                    className="h-32 w-full rounded-lg object-cover object-center"
-                    alt="gallery"
-                  />
-                </div>
-              ))}
+                  >
+                    <img
+                      src={imgelink}
+                      className="h-32 w-full rounded-lg object-cover object-center"
+                      alt="gallery"
+                    />
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={nextImage}
+                className="absolute right-[-50px] top-[50%] transform -translate-y-1/2 bg-black text-white p-2 z-10"
+                title="Next Image"
+              >
+                <ChevronRightIcon className="h-20 w-5" />
+              </button>
             </div>
           </div>
         )}
