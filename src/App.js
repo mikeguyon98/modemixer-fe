@@ -8,7 +8,6 @@ import AdminCollections from "./pages/AdminCollections";
 import GenerateCollection from "./pages/GenerateCollection";
 import Items from "./pages/Items";
 import ItemDetails from "./pages/ItemDetails";
-import { createContext, useState } from "react";
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const base_url = "http://127.0.0.1:8000";
-const base_url = "https://modemixerapi.azurewebsites.net"
+const base_url = "https://modemixerapi.azurewebsites.net";
 
 export const get_collections = async (limit, offset) => {
   try {
@@ -136,10 +136,10 @@ export const generate_item = async (
   item_id
 ) => {
   try {
-    console.log(item_id)
-    console.log(item_name)
-    console.log(item_description)
-    console.log(womanswear)
+    console.log(item_id);
+    console.log(item_name);
+    console.log(item_description);
+    console.log(womanswear);
     const response = await axios.put(`${base_url}/items/generate`, {
       title: item_name,
       description: item_description,
@@ -159,25 +159,25 @@ export const generate_techpack = async (
   item_description,
   womanswear,
   item_id,
-  image_urls,
-  ) => {
-    try {
-      console.log(item_id)
-      console.log(item_name)
-      console.log(item_description)
-      console.log(womanswear)
-      const response = await axios.put(`${base_url}/items/generate_techpack`, {
-        title: item_name,
-        description: item_description,
-        womanswear: womanswear,
-        id: item_id,
-        image_urls: image_urls,
-      });
-      console.log("RESPONSE");
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      console.error("Error generating item:", error);
-      throw error;
-    }
+  image_urls
+) => {
+  try {
+    console.log(item_id);
+    console.log(item_name);
+    console.log(item_description);
+    console.log(womanswear);
+    const response = await axios.put(`${base_url}/items/generate_techpack`, {
+      title: item_name,
+      description: item_description,
+      womanswear: womanswear,
+      id: item_id,
+      image_urls: image_urls,
+    });
+    console.log("RESPONSE");
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error generating item:", error);
+    throw error;
+  }
 };
