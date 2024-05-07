@@ -174,7 +174,7 @@ function ItemCard({ item }) {
       >
         <div className="flex mt-5 justify-center">
           <span
-            className="hover:text-blue-300 w-[80%] font-bold text-brand-dark hover:cursor-pointer"
+            className="hover:text-blue-300 max-w-[80%] font-bold text-brand-dark hover:cursor-pointer"
             style={{
               fontSize: "1.05rem",
             }}
