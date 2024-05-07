@@ -30,9 +30,6 @@ export function StickyNavbar({ children }) {
         </Link>
       </Typography>
       <Typography as="li" variant="h5" className="text-brand p-1 font-normal">
-        <Link to="/" className="flex items-center hover:text-brand-dark">
-          About
-        </Link>
       </Typography>
       {/* <Typography
             as="li"
@@ -62,7 +59,12 @@ export function StickyNavbar({ children }) {
           <div className="flex items-center gap-4 mr-12">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="flex items-center gap-x-1">
-              <CollectionCreator />
+              
+              <Link to='/admin'>
+              <Button>
+                Create Collection
+              </Button>
+              </Link>
             </div>
             <IconButton
               variant="text"
