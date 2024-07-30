@@ -5,6 +5,9 @@ import EditIcon from "./EditIcon";
 import SpinnerComp from "./SpinnerComp";
 import { generate_item, generate_techpack } from "../api";
 
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+
 export default function ItemDetailsPanel({
   title,
   description,
@@ -23,9 +26,26 @@ export default function ItemDetailsPanel({
   const [editableGender, setEditableGender] = useState(gender);
   const [localTechpackUrl, setLocalTechpackUrl] = useState(techpack_url);
   const [loading, setLocalLoading] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [shouldShowDownloadButton, setShouldShowDownloadButton] = useState(
     localTechpackUrl && localTechpackUrl.trim() !== ""
   );
+  const navigate = useNavigate();
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleImage1Change = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    const uniqueId = uuidv4();
+    console.log(img_urls[0]);
+    navigate(`/loading/${uniqueId}`, {
+      state: { file: selectedFile, clothing: img_urls[0], uniqueId },
+    });
+  };
 
   useEffect(() => {
     setEditableTitle(title);
@@ -188,6 +208,79 @@ export default function ItemDetailsPanel({
             </svg>
           </Button>
         )}
+        <div className="max-w-md mt-5 ">
+          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+            <div
+              className="cursor-pointer p-6 bg-blue-500 text-white flex justify-between items-center"
+              onClick={toggleExpand}
+            >
+              <h3 className="text-lg font-semibold">Virtual Try-On Tool</h3>
+              <svg
+                className={`w-6 h-6 transition-transform ${
+                  isExpanded ? "rotate-180" : ""
+                }`}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            {isExpanded && (
+              <div className="text-center p-4 bg-gray-100">
+                <p className="text-sm text-gray-700 mb-4">
+                  This tool allows you to visualize how different top-wear
+                  items, such as jackets and shirts, look on you or on any
+                  model. Simply upload an image of a person—whether it's
+                  yourself or a stock photo—and our tool will digitally fit the
+                  selected clothing item onto the image. Please note, this
+                  feature is optimized for top wear and may not support pants or
+                  other garments.
+                </p>
+                <label
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                  htmlFor="file-upload"
+                >
+                  Upload Your Image
+                </label>
+                <div className="relative flex items-center justify-center px-4 py-3 bg-gray-300 text-black rounded hover:bg-gray-300 transition-colors cursor-pointer">
+                  <input
+                    id="file-upload"
+                    type="file"
+                    onChange={handleImage1Change}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 mr-2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 9V6a3 3 0 00-3-3H7a3 3 0 00-3 3v8a3 3 0 003 3h2"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9.75 15H21M16.5 10.5l4.5 4.5m0 0l-4.5 4.5m4.5-4.5H9.75"
+                    />
+                  </svg>
+                  <span>Choose File</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

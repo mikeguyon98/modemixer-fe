@@ -8,7 +8,7 @@ import AdminCollections from "./pages/AdminCollections";
 import GenerateCollection from "./pages/GenerateCollection";
 import Items from "./pages/Items";
 import ItemDetails from "./pages/ItemDetails";
-import Test from "./pages/Test";
+import LoadingScreen from "./pages/LoadingScreen";
 
 function App() {
   return (
@@ -33,7 +33,8 @@ function App() {
           element={<GenerateCollection />}
         />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/loading/:uniqueId" element={<LoadingScreen />} />
+        <Route path="/result/:uniqueId" element={<LoadingScreen />} />
       </Routes>
     </StickyNavbar>
   );
