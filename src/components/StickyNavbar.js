@@ -29,18 +29,6 @@ export function StickyNavbar({ children }) {
           Collections
         </Link>
       </Typography>
-      <Typography as="li" variant="h5" className="text-brand p-1 font-normal">
-      </Typography>
-      {/* <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <Link to="/admin" className="flex items-center">
-              Admin
-            </Link>
-          </Typography> */}
     </ul>
   );
 
@@ -59,11 +47,8 @@ export function StickyNavbar({ children }) {
           <div className="flex items-center gap-4 mr-12">
             <div className="mr-4 hidden lg:block">{navList}</div>
             <div className="flex items-center gap-x-1">
-              
-              <Link to='/admin'>
-              <Button>
-                Create Collection
-              </Button>
+              <Link to="/admin">
+                <Button>Create Collection</Button>
               </Link>
             </div>
             <IconButton

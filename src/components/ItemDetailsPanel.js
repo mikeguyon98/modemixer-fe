@@ -20,10 +20,12 @@ export default function ItemDetailsPanel({
   const [editMode, setEditMode] = useState(false);
   const [editableTitle, setEditableTitle] = useState(title);
   const [editableDescription, setEditableDescription] = useState(description);
+  const [editableGender, setEditableGender] = useState(gender);
   const [localTechpackUrl, setLocalTechpackUrl] = useState(techpack_url);
   const [loading, setLocalLoading] = useState(false);
-  const [shouldShowDownloadButton, setShouldShowDownloadButton] = useState(localTechpackUrl && localTechpackUrl.trim() !== "");
-
+  const [shouldShowDownloadButton, setShouldShowDownloadButton] = useState(
+    localTechpackUrl && localTechpackUrl.trim() !== ""
+  );
 
   useEffect(() => {
     setEditableTitle(title);
@@ -40,14 +42,15 @@ export default function ItemDetailsPanel({
   };
 
   const saveChanges = async () => {
-    onUpdate(editableTitle, editableDescription, gender);
+    onUpdate(editableTitle, editableDescription, editableGender);
+    console.log(editableGender);
     setEditMode(false);
     setLocalLoading(true);
     setLoading(true);
     const generatedData = await generate_item(
       editableTitle,
       editableDescription,
-      gender,
+      editableGender,
       item_id
     );
     console.log("Generated New Item:", generatedData);
@@ -77,7 +80,6 @@ export default function ItemDetailsPanel({
     setShouldShowDownloadButton(true);
   };
 
-
   return (
     <div className="space-y-6 mt-20">
       {editMode ? (
@@ -97,9 +99,9 @@ export default function ItemDetailsPanel({
           />
           <div className="flex justify-center space-x-4 mb-4">
             <button
-              onClick={() => setGender(true)}
+              onClick={() => setEditableGender(true)}
               className={`px-4 py-2 text-lg rounded-full font-semibold ${
-                gender
+                editableGender
                   ? "bg-black text-white"
                   : "text-black border border-white"
               }`}
@@ -107,9 +109,9 @@ export default function ItemDetailsPanel({
               Womenswear
             </button>
             <button
-              onClick={() => setGender(false)}
+              onClick={() => setEditableGender(false)}
               className={`px-4 py-2 text-lg rounded-full font-semibold ${
-                !gender
+                !editableGender
                   ? "bg-black text-white"
                   : "text-black border border-white"
               }`}
@@ -119,6 +121,9 @@ export default function ItemDetailsPanel({
           </div>
           <Button onClick={saveChanges} color="green" className="px-4 py-2">
             {loading ? <SpinnerComp /> : "Save"}
+          </Button>
+          <Button onClick={() => setEditMode(false)} className="ml-4 px-4 py-2">
+            Cancel
           </Button>
         </>
       ) : (
