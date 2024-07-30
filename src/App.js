@@ -8,6 +8,7 @@ import AdminCollections from "./pages/AdminCollections";
 import GenerateCollection from "./pages/GenerateCollection";
 import Items from "./pages/Items";
 import ItemDetails from "./pages/ItemDetails";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           element={<GenerateCollection />}
         />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </StickyNavbar>
   );
